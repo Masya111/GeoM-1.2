@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-image: linear-gradient(to top, #37ecba 0%, #72afd3 100%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 40px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 10px;
+}
+
+.flag-container {
+    margin: 10px;
+}
+
+#flag-img {
+    max-width: 100%;
+}
+
+.centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+#rMenu {
+    position: fixed; /* Фіксоване позиціонування */
+    bottom: 10px; /* Знизу на 10px */
+    left: 10px; /* Зліва на 10px */
+    z-index: 9999; /* Найвищий z-index, щоб кнопка була поверх усіх інших об'єктів */
+    padding: 10px; /* Розмір відступів в кнопці */
+    background-color: #007bff; /* Колір фону кнопки */
+    color: #fff; /* Колір тексту кнопки */
+    border: none; /* Видалення рамки кнопки */
+    border-radius: 5px; /* Округлення кутів кнопки */
+    cursor: pointer; /* Зміна курсору при наведенні на кнопку */
+    width: 150px;
+}
+
+#result-window {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    display: none;
+    width: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 12px 24px; /* збільшено розмір кнопок */
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.flag-option {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.flag-option:hover {
+    background-color: #0056b3;
+}

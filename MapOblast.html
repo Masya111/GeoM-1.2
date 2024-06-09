@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map Quiz</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: calc(100vh - 30px); /* Зменшуємо висоту картки на висоту заголовка */
+        }
+        #regionName {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            padding: 5px;
+            border: 1px solid black;
+            z-index: 1000;
+        }
+        #rMenu {
+            position: fixed; /* Фіксоване позиціонування */
+            bottom: 10px; /* Знизу на 10px */
+            margin-bottom: 20px;
+            margin-left: 10px;
+            font-size: 12px;
+            left: 10px; /* Зліва на 10px */
+            z-index: 9999; /* Найвищий z-index, щоб кнопка була поверх усіх інших об'єктів */
+            padding: 10px; /* Розмір відступів в кнопці */
+            background-color: #007bff; /* Колір фону кнопки */
+            color: #fff; /* Колір тексту кнопки */
+            border: none; /* Видалення рамки кнопки */
+            border-radius: 5px; /* Округлення кутів кнопки */
+            cursor: pointer; /* Зміна курсору при наведенні на кнопку */
+        }
+
+    </style>
+</head>
+<body>
+    <div id="regionName"></div>
+    <div id="map"></div>
+    <a href = "Menu.html"><button id="rMenu">Меню</button></a>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+class UkraineQuiz {
+    constructor() {
+        this.map = L.map('map', {
+            zoomControl: false
+        });
+        this.regionNameElement = document.getElementById('regionName');
+        this.currentQuestion = null;
+        this.questions = [];
+        this.score = 0;
+        this.init();
+    }
+
+    async init() {
+    try {
+        const questionsResponse = await fetch('http://localhost:3000/api/ukraine_questions');
+        if (!questionsResponse.ok) {
+            throw new Error('Failed to fetch questions data');
+        }
+        this.questions = await questionsResponse.json();
+        this.currentQuestion = this.questions[0];
+        this.regionNameElement.textContent = this.currentQuestion.question;
+
+        const geoJsonResponse = await fetch('ukraine_regions.geojson');
+        if (!geoJsonResponse.ok) {
+            throw new Error('Failed to fetch GeoJSON data');
+        }
+        const geoJsonData = await geoJsonResponse.json();
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(this.map);
+
+        L.geoJSON(geoJsonData, {
+            style: function (feature) {
+                return {
+                    color: 'blue',
+                    weight: 2,
+                    fillOpacity: 0
+                };
+            },
+            onEachFeature: (feature, layer) => {
+                layer.on('click', () => {
+                    this.answerQuestion(layer, this.currentQuestion.correctAnswer);
+                    this.currentQuestion = this.questions[Math.floor(Math.random() * this.questions.length)];
+                    this.regionNameElement.textContent = this.currentQuestion.question;
+                });
+            }
+        }).addTo(this.map);
+
+        this.map.fitBounds(L.geoJSON(geoJsonData).getBounds());
+    } catch (error) {
+        console.error('Error initializing GeoQuiz:', error);
+    }
+}
+
+    highlightRegion(layer, color) {
+        layer.setStyle({
+            fillColor: color,
+            fillOpacity: 0.5
+        });
+    }
+
+    unhighlightRegion(layer) {
+        layer.setStyle({
+            fillColor: 'transparent',
+            fillOpacity: 0
+        });
+    }
+
+    answerQuestion(layer, correctAnswer) {
+        if (layer.feature.properties.name === correctAnswer) {
+            this.highlightRegion(layer, 'green');
+            this.score++;
+        } else {
+            this.highlightRegion(layer, 'red');
+        }
+
+        setTimeout(() => {
+            this.unhighlightRegion(layer);
+        }, 1000);
+    }
+}
+
+const geoQuiz = new UkraineQuiz();
+    </script>
+</body>
+</html>

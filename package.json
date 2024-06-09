@@ -1,0 +1,19 @@
+{
+  "name": "diplom-1-true",
+  "version": "1.0.0",
+  "description": "",
+  "main": "base1.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongodb": "^6.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}

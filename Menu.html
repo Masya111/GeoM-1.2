@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Menu</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    margin-top: 130px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+
+  h2 {
+    margin-bottom: 40px;
+    color: #333;
+  }
+
+  .button {
+    display: block;
+    width: 200px; /* задаем одинаковую ширину для всех кнопок */
+    font-size: 15px;
+    padding: 10px 20px;
+    margin: 20px auto;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  #statsButton {
+    width: 240px;
+  }
+  #infoButton {
+    width: 240px;
+  }
+
+  .button:hover {
+    background-color: #0056b3;
+  }
+
+  .sign-out{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .live {
+    background-color: #dc3545;
+  }
+
+
+  .sign-out:hover {
+    background-color: #c82333;
+  }
+  .modal {
+    display: none; /* Початково приховане */
+    position: fixed; /* Фіксована позиція */
+    z-index: 1; /* Поверх усіх елементів */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Дозволяє прокрутку, якщо вміст великий */
+    background-color: rgb(0,0,0); /* Чорний колір фону */
+    background-color: rgba(0,0,0,0.4); /* Півпрозорий фон */
+    padding-top: 60px; /* Відступ від верхнього краю */
+}
+
+/* Стилі для контейнера модального вікна */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; /* Центрування по вертикалі та горизонталі */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Ширина контенту */
+}
+
+/* Стилі для закриваючого елемента (хрестик) */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+#playerTable {
+    margin: 0 auto; /* Центрируем таблицу по горизонтали */
+}
+
+th, td {
+    padding: 10px; /* Добавляем немного отступа вокруг содержимого ячеек */
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Меню</h2>
+  <a href="GameModes.html" class="button">Грати</a>
+  <button id="statsButton" class="button">Статистика</button>
+  <a href="instruction.html" class="button">Як грати</a>
+<div id="statsModal" class="modal">
+  <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Статистика</h2>
+      <table id="playerTable">
+          <tr>
+              <th>Ім'я</th>
+              <th>Швидка гра</th>
+              <th>Вгадай прапор</th>
+              <th>Вікторина</th>
+          </tr>
+      </table>
+  </div>
+</div>
+  <a href="index.html" class="sign-out">Вийти</a>
+</div>
+<script>
+class PlayerStats {
+    constructor() {
+        this.statsButton = document.getElementById('statsButton');
+        this.statsButton.addEventListener('click', this.showStats.bind(this));
+
+        this.closeButton = document.getElementsByClassName('close')[0];
+        this.closeButton.addEventListener('click', this.closeStats.bind(this));
+    }
+
+    async showStats() {
+        try {
+            const response = await fetch('http://localhost:3000/api/player_stats');
+            if (!response.ok) {
+                throw new Error('Failed to fetch player stats');
+            }
+            const players = await response.json();
+
+            // Сортування гравців за різними балами
+            players.sort((a, b) => (b.score_fast + b.score_flag + b.score_quiz) - (a.score_fast + a.score_flag + a.score_quiz));
+
+            const table = document.getElementById('playerTable');
+            // Очищення таблиці перед виведенням нових даних
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+
+            // Додавання рядків з даними гравців у таблицю
+            players.forEach(player => {
+                const row = table.insertRow(-1);
+                row.insertCell(0).textContent = player.name;
+                row.insertCell(1).textContent = player.score_fast;
+                row.insertCell(2).textContent = player.score_flag;
+                row.insertCell(3).textContent = player.score_quiz;
+            });
+
+            document.getElementById('statsModal').style.display = 'block'; // Показати модальне вікно
+        } catch (error) {
+            console.error('Error fetching player stats:', error);
+            alert('Failed to fetch player stats');
+        }
+    }
+
+    closeStats() {
+        document.getElementById('statsModal').style.display = 'none'; // Закрыть модальное окно
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const playerStats = new PlayerStats();
+});
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вгадай прапор</title>
+    <link rel="stylesheet" href="flagStyle.css">
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <h1>Вгадай прапор</h1>
+            <div class="flag-container">
+                <img id="flag-img" src="" alt="Flag Image">
+            </div>
+            <div class="btn-wrapper">
+                <button class="flag-option" name="1">Option 1</button>
+                <button class="flag-option" name="2">Option 2</button>
+                <button class="flag-option" name="3">Option 3</button>
+            </div>
+            <p id="result"></p>
+        </div>
+        <div id="result-window" class="centered">
+            <div id="result-msg"></div>
+            <div id="score"></div>
+            <p id="game-over">Гра закінчена! Ваш рахунок: <span id="score-value">0</span></p>
+            <div class="button-container">
+                <button id="mainMenu" class="button">Меню</button>
+                <button id="restart" class="button">Перезапуск</button>
+            </div>
+    </div>
+    <a href = "Menu.html"><button id="rMenu">Меню</button></a>
+    <script src="flagScript.js"></script>
+</body>
+</html>
