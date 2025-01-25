@@ -7,7 +7,7 @@ const app = express();
 const port = 3000;
 
 
-const url = "mongodb+srv://maksimvasilenko223:qwerty228@cluster0.xbz9sbz.mongodb.net/GeoM?retryWrites=true&w=majority";
+const url = "mongodb+srv://maksimvasilenko223:Agurecfantastik887@cluster0.xbz9sbz.mongodb.net/GeoM?retryWrites=true&w=majority&appName=Cluster0";
 
 let db;
 

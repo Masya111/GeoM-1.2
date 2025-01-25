@@ -4,73 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Вхід</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  }
-
-  .container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  }
-
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-  }
-
-  label {
-    display: block;
-    margin-bottom: 5px;
-    color: #333;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-
-  input[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  button {
-    margin-top: 20px;
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #0056b3;
-  }
-
-  input[type="submit"]:hover {
-    background-color: #0056b3;
-  }
-</style>
+<link rel="stylesheet" href="/GeoM-1.2//styles/mainStyle.css">
 </head>
 <body>
 <div class="container">
@@ -88,57 +22,6 @@
   <a href = "registration.html"><button>Реєстрація</button></a>
 </div>
 
-<script>
-  class LoginForm {
-    constructor() {
-        this.form = document.getElementById('loginForm');
-        this.message = document.getElementById('message');
-        this.form.addEventListener('submit', this.onSubmit.bind(this));
-    }
-
-    async onSubmit(event) {
-        event.preventDefault();
-
-        const formData = new FormData(this.form);
-        const requestData = {
-            username: formData.get("username"),
-            password: formData.get("password")
-        };
-
-        try {
-            const response = await fetch('http://localhost:3000/api/login', {
-                method: 'POST',  // Используем метод POST
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(requestData)
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Успешный вход:", data);
-                this.successfulLogin(data.userId);
-            } else {
-                const errorData = await response.json();
-                console.log("Ошибка входа:", errorData);
-                this.message.innerText = errorData.message;
-            }
-        } catch (error) {
-            console.error('Ошибка:', error);
-            this.message.innerText = 'Ошибка при входе';
-        }
-    }
-
-    successfulLogin(userId) {
-        this.message.innerText = 'Успешный вход';
-        localStorage.setItem('currentUserID', userId);
-        window.location = "Menu.html";
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = new LoginForm();
-});
-</script>
+<script src="/GeoM-1.2/scripts/loginScript.js"></script>
 </body>
 </html>

@@ -1,0 +1,39 @@
+#map {
+    height: calc(100vh - 30px); 
+}
+#regionName {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    padding: 5px;
+    border: 1px solid black;
+    z-index: 1000;
+}
+button {
+    width: 100%;
+    background-color: #4caf50;
+    border-radius: 7px;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+}
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+.menu-return {
+    position: absolute;
+    z-index: 9999;
+    background-color: #6cee70;
+    bottom: 20px;
+    left: 20px;
+    width: fit-content;
+}

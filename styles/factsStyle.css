@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: rgb(39, 44, 67);
+}
+
+#name {
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    width: fit-content;
+    opacity: 0;
+    border-radius: 5px;
+    border: 3px solid rgb(245, 128, 128);
+    padding: 0px 5px;
+    font-size: 1.5rem;
+
+}
+
+
+#timeCont{
+    background-color: white;
+    width: fit-content;
+    font-size: 1.5rem;
+    padding: 5px 5px;
+    border-radius: 5px;
+    border: 3px solid rgb(245, 128, 128);        
+}
+
+
+svg path {
+    cursor: pointer;
+}
+#countryFacts {
+    font-size: 14px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#countryFacts h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+#countryFacts ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#countryFacts li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+}
+
+#countryFacts li:before {
+    content: "\\2022"; /* Bullet point */
+    color: #333;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+    position: absolute;
+    left: 0;
+}
+button {
+    width: 100%;
+    background-color: #4caf50;
+    border-radius: 7px;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+}
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+.menu-return {
+    position: absolute;
+    background-color: #6cee70;
+    bottom: 20px;
+    left: 20px;
+    width: fit-content;
+}

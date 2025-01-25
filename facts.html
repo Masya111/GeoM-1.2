@@ -6,109 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Факти</title>
+    <link rel="stylesheet" href="/GeoM-1.2/styles/factsStyle.css">
     <script src="https://kit.fontawesome.com/37d6505749.js" crossorigin="anonymous"></script>
-
 </head>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    body {
-        overflow-x: hidden;
-        overflow-y: hidden;
-        background-color: rgb(39, 44, 67);
-    }
-
-    #name {
-        position: absolute;
-        background-color: rgb(255, 255, 255);
-        width: fit-content;
-        opacity: 0;
-        border-radius: 5px;
-        border: 3px solid rgb(245, 128, 128);
-        padding: 0px 5px;
-        font-size: 1.5rem;
-
-    }
-
-
-    #timeCont{
-        background-color: white;
-        width: fit-content;
-        font-size: 1.5rem;
-        padding: 5px 5px;
-        border-radius: 5px;
-        border: 3px solid rgb(245, 128, 128);        
-    }
-    
-
-    svg path {
-        cursor: pointer;
-    }
-    #countryFacts {
-        font-size: 14px;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-    #countryFacts h2 {
-        margin-top: 0;
-        color: #333;
-    }
-
-    #countryFacts ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    #countryFacts li {
-        margin-bottom: 10px;
-        padding-left: 20px;
-        position: relative;
-    }
-
-    #countryFacts li:before {
-        content: "\\2022"; /* Bullet point */
-        color: #333;
-        font-weight: bold;
-        display: inline-block;
-        width: 1em;
-        margin-left: -1em;
-        position: absolute;
-        left: 0;
-    }
-    #rMenu {
-    position: fixed; /* Фіксоване позиціонування */
-    bottom: 10px; /* Знизу на 10px */
-    left: 10px; /* Зліва на 10px */
-    z-index: 9999; /* Найвищий z-index, щоб кнопка була поверх усіх інших об'єктів */
-    padding: 10px; /* Розмір відступів в кнопці */
-    background-color: #007bff; /* Колір фону кнопки */
-    color: #fff; /* Колір тексту кнопки */
-    border: none; /* Видалення рамки кнопки */
-    border-radius: 5px; /* Округлення кутів кнопки */
-    cursor: pointer; /* Зміна курсору при наведенні на кнопку */
-}
-
-</style>
 
 <body id="body">
 
     <?xml version="1.0"?>
 
     <div id="name">
-        <p id="namep">Name</p>
+        <p id="namep">Ім'я</p>
     </div>
 
 
 
     <div id="countryFacts"></div>
-    <a href = "Menu.html"><button id="rMenu">Меню</button></a>
+    <a href = "Menu.html"><button class="menu-return">Меню</button></a>
 
     <svg id="allSvg" baseprofile="tiny" fill="#ececec" stroke="black" stroke-linecap="round" stroke-linejoin="round"
         version="1.2" viewbox="0 0 2000 857" xmlns="http://www.w3.org/2000/svg">
@@ -1639,73 +1553,9 @@
         <circle cx="1798.2" cy="719.3" id="2">
         </circle>
     </svg>
-
+<script src="/GeoM-1.2/scripts/factsScript.js"></script>
 </body>
 
-<script>
-class CountryFacts {
-    constructor() {
-        this.countryFactsElement = document.getElementById("countryFacts");
-        this.nameElement = document.getElementById('name');
-        this.allPaths = document.querySelectorAll(".allPaths");
-        this.setupEventListeners();
-    }
 
-    async getUser(place) {
-    try {
-        const response = await fetch(`http://localhost:3000/api/facts?place=${encodeURIComponent(place)}`);
-        if (!response.ok) {
-            throw new Error('Failed to fetch data');
-        }
-        const country = await response.json();
-        if (country) {
-            const countryFacts = country.facts.join('<br>');
-            this.countryFactsElement.innerHTML = `<strong>${place}</strong>:<br>${countryFacts}`;
-        }
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-}
-
-    setupEventListeners() {
-        this.allPaths.forEach(path => {
-            path.setAttribute('class', `allPaths ${path.id}`);
-            path.addEventListener("mouseover", this.handleMouseOver.bind(this));
-            path.addEventListener("mouseleave", this.handleMouseLeave.bind(this));
-            path.addEventListener("click", this.handleClick.bind(this));
-        });
-    }
-
-    handleMouseOver(event) {
-        window.onmousemove = (j) => {
-            let x = j.clientX;
-            let y = j.clientY;
-            this.nameElement.style.top = y - 60 + 'px';
-            this.nameElement.style.left = x + 10 + 'px';
-        };
-
-        const classes = event.target.className.baseVal.replace(/ /g, '.');
-        document.querySelectorAll(`.${classes}`).forEach(country => {
-            country.style.fill = "pink";
-        });
-        this.nameElement.style.opacity = 1;
-        this.nameElement.innerText = event.target.id;
-    }
-
-    handleMouseLeave(event) {
-        const classes = event.target.className.baseVal.replace(/ /g, '.');
-        document.querySelectorAll(`.${classes}`).forEach(country => {
-            country.style.fill = "#ececec";
-        });
-        this.nameElement.style.opacity = 0;
-    }
-
-    handleClick(event) {
-        this.getUser(event.target.id);
-    }
-}
-
-const countryFacts = new CountryFacts();
-</script>
 
 </html>
